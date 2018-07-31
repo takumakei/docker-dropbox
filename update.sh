@@ -38,7 +38,7 @@ RUN apt-get update \\
 COPY --from=wget /dropboxd /dropboxd
 COPY --from=wget /usr/bin/dropbox.py /usr/bin/dropbox.py
 
-VOLUME /dropbox
+RUN mkdir -p /dropbox
 ENV HOME /dropbox
 WORKDIR /dropbox
 CMD ["/dropboxd/dropboxd"]
