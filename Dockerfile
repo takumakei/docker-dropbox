@@ -17,6 +17,7 @@ RUN apt-get update \
 
 COPY --from=wget /dropboxd /dropboxd
 COPY --from=wget /usr/bin/dropbox.py /usr/bin/dropbox.py
+COPY assets/usercustomize.py /dropbox/.local/lib/python2.7/site-packages/usercustomize.py
 
 RUN mkdir -p /dropbox
 ENV HOME /dropbox
