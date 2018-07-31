@@ -7,11 +7,13 @@ URL="https://www.dropbox.com/download?plat=lnx.x86_64"
 main() {
   local url version
 
+  cd "$(dirname "$BASH_SOURCE")"
+
   url="$(curl -sS --head "$URL" | sed -e '/^Location:/!d' -e 's/^Location: //' -e 's///g')"
   version="$(echo "$url" | sed -e 's/^.*x86_64-\(.*\)\.tar\.gz/\1/')"
 
-  echo "$version" > VERSION
-  print_dockerfile "$url" > Dockerfile
+  mkdir -p "$version"
+  print_dockerfile "$url" > "$version/Dockerfile"
 }
 
 print_dockerfile() {
