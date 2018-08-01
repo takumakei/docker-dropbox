@@ -12,28 +12,34 @@ dropbox_help() {
   if [[ -z "$DROPBOX_NAME" ]]; then
     name="mandatory - not defined"
   else
-    name="defined: $DROPBOX_NAME"
+    name="$DROPBOX_NAME"
+  fi
+
+  if [[ -z "$DROPBOX_IMAGE" ]]; then
+    echo "ERROR: DROPBOX_IMAGE environment variable is empty" 1>&2
+    exit 1
   fi
 
   cat <<EOF
-Usage: dropbox.sh [command]
+Usage: dropbox.sh [command] [options...]
+
+  Script for the container of Dropbox client for Linux
 
 environments:
-
-  DROPBOX_NAME  container name ($name)
-  DROPBOX_SYNC  directory to sync (default: $DROPBOX_SYNC)
-  DROPBOX_CONF  directory to config (default: $DROPBOX_CONF)
   DROPBOX_IMAGE  docker image name   ($DROPBOX_IMAGE)
+  DROPBOX_NAME   container name      ($name)
+  DROPBOX_SYNC   directory to sync   ($DROPBOX_SYNC)
+  DROPBOX_CONF   directory to config ($DROPBOX_CONF)
 
 commands:
   u, up      docker run ${DROPBOX_IMAGE}
   s, status  dropbox.py status
   d, down    dropbox.py stop
-  c, cli     dropbox.py
-  l, logs    docker logs
-  S, STOP    docker stop
-  K, KILL    docker kill
-  R, RM      docker rm
+  c, cli     dropbox.py [options...]
+  l, logs    docker logs ${DROPBOX_NAME}
+  S, STOP    docker stop ${DROPBOX_NAME}
+  K, KILL    docker kill ${DROPBOX_NAME}
+  R, RM      docker rm   ${DROPBOX_NAME}
 EOF
 }
 
@@ -45,7 +51,7 @@ main() {
 
   if [[ -z "$DROPBOX_NAME" ]]; then
     echo "ERROR: DROPBOX_NAME environment variable is not defined" 1>&2
-    return 1
+    exit 1
   fi
 
   local cmd="$1"
@@ -82,7 +88,7 @@ main() {
     *)
       echo "ERROR: unknown command '$cmd'" 1>&2
       dropbox_help "$@"
-      return 1
+      exit 1
       ;;
   esac
 }
