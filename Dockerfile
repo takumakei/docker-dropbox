@@ -19,7 +19,7 @@ COPY --from=wget /dropboxd /dropboxd
 COPY --from=wget /usr/bin/dropbox.py /usr/bin/dropbox.py
 COPY assets/usercustomize.py /dropbox/.local/lib/python2.7/site-packages/usercustomize.py
 
-RUN mkdir -p /dropbox
+RUN mkdir -p /dropbox/Dropbox
 ENV HOME /dropbox
-WORKDIR /dropbox
+WORKDIR /dropbox/Dropbox
 CMD ["/dropboxd/dropboxd"]
