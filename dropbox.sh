@@ -2,6 +2,7 @@
 
 set -eu
 
+DROPBOX_IMAGE="${DROPBOX_IMAGE:-takumakei/dropbox:latest}"
 DROPBOX_NAME="${DROPBOX_NAME:-}"
 DROPBOX_SYNC="${DROPBOX_SYNC:-$HOME/Dropbox}"
 DROPBOX_CONF="${DROPBOX_CONF:-$HOME/.dropbox}"
@@ -22,9 +23,10 @@ environments:
   DROPBOX_NAME  container name ($name)
   DROPBOX_SYNC  directory to sync (default: $DROPBOX_SYNC)
   DROPBOX_CONF  directory to config (default: $DROPBOX_CONF)
+  DROPBOX_IMAGE  docker image name   ($DROPBOX_IMAGE)
 
 commands:
-  u, up      docker run takumakei/dropbox:latest
+  u, up      docker run ${DROPBOX_IMAGE}
   s, status  dropbox.py status
   d, down    dropbox.py stop
   c, cli     dropbox.py
@@ -99,7 +101,7 @@ dropbox_up() {
              --memory=256m                                \
              --volume="${DROPBOX_SYNC}":/dropbox/Dropbox  \
              --volume="${DROPBOX_CONF}":/dropbox/.dropbox \
-             takumakei/dropbox
+             ${DROPBOX_IMAGE}
 }
 
 dropbox_status() {
