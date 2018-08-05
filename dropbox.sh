@@ -37,6 +37,7 @@ commands:
   d, down    dropbox.py stop
   c, cli     dropbox.py [options...]
   l, logs    docker logs ${DROPBOX_NAME}
+  e, exec    docker exec ${DROPBOX_NAME} [options...]
   S, STOP    docker stop ${DROPBOX_NAME}
   K, KILL    docker kill ${DROPBOX_NAME}
   R, RM      docker rm   ${DROPBOX_NAME}
@@ -69,6 +70,9 @@ main() {
       ;;
     l|logs)
       dropbox_logs "$@"
+      ;;
+    e|exec)
+      dropbox_exec "$@"
       ;;
     S|STOP)
       dropbox_stop "$@"
@@ -120,6 +124,10 @@ dropbox_down() {
 
 dropbox_logs() {
   run docker logs "$@" "$DROPBOX_NAME"
+}
+
+dropbox_exec() {
+  run docker exec "$DROPBOX_NAME" "$@"
 }
 
 dropbox_stop() {
