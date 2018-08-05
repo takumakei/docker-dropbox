@@ -10,7 +10,7 @@ main() {
   if [[ "$mine" = "$latest" ]]; then
     echo "up to date (version:$latest)"
   else
-    echo "updated (latest:$latest != $latest:Dockerfile)"
+    echo "updated (latest:$latest != $mine:Dockerfile)"
     exit 1
   fi
 }
