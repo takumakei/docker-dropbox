@@ -5,7 +5,7 @@ RUN apt-get update \
  && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /dropboxd \
- && wget -q -O - "https://clientupdates.dropboxstatic.com/dbx-releng/client/dropbox-lnx.x86_64-54.4.90.tar.gz" | tar xzf - -C /dropboxd --strip 1 \
+ && wget -q -O - "https://clientupdates.dropboxstatic.com/dbx-releng/client/dropbox-lnx.x86_64-55.4.171.tar.gz" | tar xzf - -C /dropboxd --strip 1 \
  && wget -q -O /usr/bin/dropbox.py "https://www.dropbox.com/download?dl=packages/dropbox.py" \
  && chmod +x /usr/bin/dropbox.py
 
